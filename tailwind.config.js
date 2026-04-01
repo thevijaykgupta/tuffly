@@ -5,7 +5,7 @@ const config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: 'class', // Enable class-based dark mode
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -14,31 +14,28 @@ const config = {
         cursive: ['Fruitinger', 'Pacifico', 'cursive'],
       },
       colors: {
-        // Premium brand colors
-        'brand': {
-          'primary': '#0f1a3d',
-          'secondary': '#0f1a3d', 
-          'accent': '#FCD34D',
-          'purple': '#0f1a3d',
+        brand: {
+          primary: '#0f1a3d',
+          secondary: '#0f1a3d',
+          accent: '#FCD34D',
+          purple: '#0f1a3d',
           'light-purple': '#0f1a3d',
         },
-        // Glassmorphism colors
-        'glass': {
-          'white': 'rgba(255, 255, 255, 0.1)',
-          'dark': 'rgba(0, 0, 0, 0.1)',
-          'blur': 'rgba(255, 255, 255, 0.05)',
+        glass: {
+          white: 'rgba(255, 255, 255, 0.1)',
+          dark: 'rgba(0, 0, 0, 0.1)',
+          blur: 'rgba(255, 255, 255, 0.05)',
         },
-        // Emotion-based theme colors
-        'emotion': {
-          'happy': '#FCD34D',
-          'calm': '#4F46E5',
-          'energetic': '#EF4444',
-          'focused': '#10B981',
+        emotion: {
+          happy: '#FCD34D',
+          calm: '#4F46E5',
+          energetic: '#EF4444',
+          focused: '#10B981',
         },
-        'gold': {
-          'DEFAULT': '#FCD34D',
-          '400': '#FCD34D',
-          'glow': '#FCD34D',
+        gold: {
+          DEFAULT: '#FCD34D',
+          400: '#FCD34D',
+          glow: '#FCD34D',
         },
         'dark-primary': '#0f172a',
         'dark-secondary': '#1e293b',
@@ -71,12 +68,12 @@ const config = {
         'tuffly-gradient': 'linear-gradient(to top right, #0f1a3d, #0f1a3d, #FCD34D)',
       },
       backdropBlur: {
-        'xs': '2px',
+        xs: '2px',
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'shimmer': 'shimmer 2s linear infinite',
+        float: 'float 6s ease-in-out infinite',
+        glow: 'glow 2s ease-in-out infinite alternate',
+        shimmer: 'shimmer 2s linear infinite',
         'bounce-gentle': 'bounce-gentle 2s infinite',
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
       },
@@ -98,19 +95,19 @@ const config = {
           '50%': { transform: 'translateY(-10px)' },
         },
         'pulse-glow': {
-          '0%, 100%': { 
+          '0%, 100%': {
             boxShadow: '0 0 20px rgba(255, 215, 0, 0.3)',
-            transform: 'scale(1)'
+            transform: 'scale(1)',
           },
-          '50%': { 
+          '50%': {
             boxShadow: '0 0 30px rgba(255, 215, 0, 0.6)',
-            transform: 'scale(1.05)'
+            transform: 'scale(1.05)',
           },
         },
       },
       boxShadow: {
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-        'glow': '0 0 20px rgba(255, 215, 0, 0.5)',
+        glass: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+        glow: '0 0 20px rgba(255, 215, 0, 0.5)',
         'glow-strong': '0 0 30px rgba(255, 215, 0, 0.8)',
         'card-hover': '0 20px 40px rgba(0, 0, 0, 0.1)',
       },
@@ -118,4 +115,5 @@ const config = {
   },
   plugins: [],
 };
+
 module.exports = config;
