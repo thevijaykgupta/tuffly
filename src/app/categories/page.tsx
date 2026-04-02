@@ -71,13 +71,16 @@ export default function CategoriesPage() {
     let filtered = allProducts;
 
     // Filter by search query
-    if (searchQuery) {
-      filtered = filtered.filter(product =>
-        product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.seller.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description?.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
+if (searchQuery) {
+  const query = searchQuery.toLowerCase();
+
+  filtered = filtered.filter(product =>
+    product.title.toLowerCase().includes(query) ||
+    product.seller.name.toLowerCase().includes(query) ||
+    product.category.toLowerCase().includes(query) ||
+    product.description?.toLowerCase().includes(query)
+    );
+  }
 
     // Filter by category
     if (selectedCategory !== 'all') {
@@ -288,7 +291,7 @@ export default function CategoriesPage() {
         {/* Search Bar */}
         <div className="mb-6">
           <div className="relative">
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 " />
             <input
               type="text"
               placeholder="Search products, brands, or descriptions..."
@@ -322,61 +325,94 @@ export default function CategoriesPage() {
 
         {/* Filters */}
         {showFilters && (
-          <div className="mb-6 bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-4">Advanced Filters</h3>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900 ">Advanced Filters</h3>
+             <button
+              onClick={() => {
+                setSelectedCategory('all');
+                setPriceRange([0, 5000]);
+                setSortBy('name');
+                setSearchQuery('');
+              }}
+              className="text-sm text-red-500 hover:underline"
+            >
+              Clear Filters
+            </button>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {/* Category Filter */}
               <div>
-                <label className="block text-sm font-medium mb-2">Category</label>
+                <label className="text-gray-600 block text-sm font-medium mb-2">Category</label>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="text-gray-600 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 >
                   <option value="all">All Categories</option>
-                  {(() => {
-                    const categories = Array.from(new Set(contextProducts.map(p => p.category)));
-                    return categories.map((category) => (
-                      <option
-                        key={category}
-                        value={category.toLowerCase().replace(/\s+/g, '-')}
-                      >
-                        {category}
-                      </option>
-                    ));
-                  })()}
+                  {allCategories.map((category) => (
+                  <option key={category.name} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
                 </select>
               </div>
 
               {/* Price Range */}
               <div>
-                <label className="block text-sm font-medium mb-2">Price Range</label>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="number"
-                    value={priceRange[0]}
-                    onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
-                    className="w-20 px-2 py-2 border border-gray-300 rounded-lg text-sm"
-                    placeholder="Min"
-                  />
-                  <span>-</span>
-                  <input
-                    type="number"
-                    value={priceRange[1]}
-                    onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                    className="w-20 px-2 py-2 border border-gray-300 rounded-lg text-sm"
-                    placeholder="Max"
-                  />
-                </div>
+                <label className="block text-sm font-medium mb-2 text-gray-600">Price Range</label>
+                <div className="flex flex-col gap-2">
+  {/* Values */}
+  <div className="flex justify-between text-sm text-gray-700 font-medium">
+    <span>₹{priceRange[0]}</span>
+    <span>₹{priceRange[1]}</span>
+  </div>
+
+  {/* Slider */}
+  <div className="relative">
+    <input
+      type="range"
+      min="0"
+      max="5000"
+      value={priceRange[0]}
+      onChange={(e) =>
+        setPriceRange([Math.min(Number(e.target.value), priceRange[1] - 100), priceRange[1]])
+      }
+      className="absolute w-full pointer-events-none appearance-none z-10 h-2 bg-transparent"
+    />
+
+    <input
+      type="range"
+      min="0"
+      max="5000"
+      value={priceRange[1]}
+      onChange={(e) =>
+        setPriceRange([priceRange[0], Math.max(Number(e.target.value), priceRange[0] + 100)])
+      }
+      className="absolute w-full appearance-none h-2 bg-transparent"
+    />
+
+    {/* Track */}
+    <div className="h-2 bg-gray-300 rounded-lg"></div>
+
+    {/* Active range */}
+    <div
+      className="absolute h-2 bg-yellow-500 rounded-lg"
+      style={{
+        left: `${(priceRange[0] / 5000) * 100}%`,
+        width: `${((priceRange[1] - priceRange[0]) / 5000) * 100}%`,
+        top: 0,
+      }}
+    ></div>
+  </div>
+  </div>
               </div>
 
               {/* Sort By */}
               <div>
-                <label className="block text-sm font-medium mb-2">Sort By</label>
+                <label className="block text-sm font-medium mb-2 text-gray-600">Sort By</label>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                  className="text-gray-600 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 >
                   <option value="name">Name</option>
                   <option value="price-low">Price: Low to High</option>
@@ -386,8 +422,8 @@ export default function CategoriesPage() {
 
               {/* Availability */}
               <div>
-                <label className="block text-sm font-medium mb-2">Availability</label>
-                <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                <label className="block text-sm font-medium mb-2 text-gray-600">Availability</label>
+                <select className="text-gray-600 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
                   <option value="all">All Items</option>
                   <option value="in-stock">In Stock Only</option>
                   <option value="out-of-stock">Out of Stock</option>
@@ -433,12 +469,24 @@ export default function CategoriesPage() {
           })()}
         </div>
 
+          {/* Active Filters */}
+          <div className="flex gap-2 flex-wrap mb-4">
+            {selectedCategory !== 'all' && (
+              <span className="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm">
+                {selectedCategory}
+              </span>
+            )}
+            <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">
+              ₹{priceRange[0]} - ₹{priceRange[1]}
+            </span>
+          </div>
+
         {/* Products Grid/List */}
         <div id="products-section" className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' : 'space-y-4'}>
           {Array.isArray(filteredProducts) && filteredProducts.map((product) => (
             <div
               key={product.id}
-              className={`bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 ${
+              className={`group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 ${
                 viewMode === 'list' ? 'flex' : ''
               } ${selectedProducts.includes(product.id) ? 'ring-2 ring-yellow-500' : ''}`}
             >
@@ -460,6 +508,11 @@ export default function CategoriesPage() {
                   className="object-cover w-full h-full rounded-lg"
                   onError={e => { e.currentTarget.src = '/images/products/logo_blackk.png'; }}
                 />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                  <button className="bg-white text-black px-4 py-2 rounded-lg text-sm">
+                    Quick View
+                  </button>
+                </div>
                 {!product.isAvailable && (
                   <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                     <span className="text-white font-bold">Out of Stock</span>
@@ -469,7 +522,7 @@ export default function CategoriesPage() {
               {/* Product Info */}
               <div className={`p-4 ${viewMode === 'list' ? 'flex-1' : ''}`}>
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="font-semibold text-gray-800 truncate">{product.title}</h3>
+                  <h3 className="font-semibold text-gray-900 text-lg leading-tight">{product.title}</h3>
                 </div>
                 <p className="text-sm text-gray-600 mb-2">{product.seller.name}</p>
                 <div className="flex items-center space-x-2 mb-3">
