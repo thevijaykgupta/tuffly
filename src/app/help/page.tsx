@@ -216,7 +216,7 @@ export default function HelpPage() {
           )}
         </div>
 
-        {/* Live Chat */}
+        {/* Live Chat
         <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Still Need Help?</h2>
           <p className="text-gray-600 mb-4">Our support team is available 24/7 to help you with any questions or issues.</p>
@@ -224,7 +224,7 @@ export default function HelpPage() {
             <FaComments />
             <span>Start Live Chat</span>
           </button>
-        </div>
+        </div> */}
 
         {/* Quick Links */}
         <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
