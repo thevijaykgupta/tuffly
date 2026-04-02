@@ -9,21 +9,27 @@ import { FaArrowLeft, FaEdit, FaCog, FaHeart, FaHistory, FaWallet, FaGift, FaTro
 export default function ProfilePage() {
   const { user, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
-
+  {/* Stats Data */}
   const stats = [
     { label: 'Orders', value: '12', icon: FaHistory, color: 'bg-blue-500' },
-    { label: 'Favorites', value: '8', icon: FaHeart, color: 'bg-red-500' },
+    { label: 'Wishlist', value: '8', icon: FaHeart, color: 'bg-red-500' },
     { label: 'Points', value: '1,250', icon: FaTrophy, color: 'bg-yellow-500' },
+    { label: 'Sold Items', value: '5', icon: FaClipboardList, color: 'bg-green-500' },
   ];
 
+{/* Quick Actions */}
   const quickActions = [
     { icon: FaClipboardList, label: 'My Orders', href: '/orders', color: 'bg-indigo-500' },
-    { icon: FaWallet, label: 'My Wallet', href: '/wallet', color: 'bg-green-500' },
+    // { icon: FaWallet, label: 'My Wallet', href: '/wallet', color: 'bg-green-500' },
     { icon: FaGift, label: 'Rewards', href: '/rewards', color: 'bg-purple-500' },
-    { icon: FaQrcode, label: 'QR Code', href: '/qr', color: 'bg-blue-500' },
-    { icon: FaCamera, label: 'Photo Search', href: '/photo-search', color: 'bg-pink-500' },
+    // { icon: FaQrcode, label: 'QR Code', href: '/qr', color: 'bg-blue-500' },
+    // { icon: FaCamera, label: 'Photo Search', href: '/photo-search', color: 'bg-pink-500' },
+    { icon: FaShare, label: 'Share', href: '/share', color: 'bg-yellow-500' },
+    { icon: FaCog, label: 'Settings', href: '/settings', color: 'bg-gray-500' },
+    { icon: FaEdit, label: 'Edit Profile', href: '/edit-profile', color: 'bg-gray-500' }
   ];
 
+  {/* Recent Orders */}
   const recentOrders = [
     { id: '1', item: 'Arduino Kit', status: 'Delivered', date: '2024-01-25', amount: '₹1,200' },
     { id: '2', item: 'Nike Socks', status: 'Shipped', date: '2024-01-24', amount: '₹240' },
@@ -75,6 +81,9 @@ export default function ProfilePage() {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-800">{user?.name || 'User Name'}</h2>
+                  <p className="text-yellow-500 text-sm mt-1">
+                    ⭐ 4.8 Rating • 23 Reviews
+                  </p>
                   <p className="text-gray-600">{user?.email || 'user@example.com'}</p>
                   <div className="flex items-center space-x-2 mt-2">
                     <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
@@ -113,6 +122,21 @@ export default function ProfilePage() {
             </div>
           ))}
                 </div>
+          <div className="bg-white rounded-xl p-4 shadow mb-8">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Transaction Summary
+            </h3>
+
+            <div className="flex justify-between text-sm text-gray-600">
+              <span>Successful Transactions</span>
+              <span className="font-bold text-gray-800">17</span>
+            </div>
+
+            <div className="flex justify-between text-sm text-gray-600 mt-2">
+              <span>Total Money Exchanged</span>
+              <span className="font-bold text-green-600">₹5,200</span>
+            </div>
+          </div>
 
         {/* Quick Actions */}
         <div className="bg-white rounded-2xl shadow-xl p-6 mb-8">
@@ -137,7 +161,7 @@ export default function ProfilePage() {
         {/* Tabs */}
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="flex border-b border-gray-200">
-            {['overview', 'orders', 'favorites', 'settings'].map((tab) => (
+            {['overview', 'orders','listings', 'favorites', 'settings'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
