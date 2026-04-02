@@ -32,10 +32,6 @@ export default function Home() {
   const products = getApprovedProducts();
   const displayedCategories = categories.filter(
   (category) => category.slug !== 'others' && products.some((product) => product.category === category.slug)
-  // const displayedCategories = categories.filter(category => {
-  //   if (category.slug === 'others') return false;
-  //   return products.some(product => product.category === category.slug);
-  // }
 );
  
  //dummy products for testing - remove when backend is ready
@@ -90,7 +86,8 @@ export default function Home() {
     
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-blue-50 to-white font-sans relative overflow-hidden">
-      {/* Animated Background Particles */}
+     {/* <div className="min-h-screen bg-gradient-to-br from-oc-blue-6/80 via-oc-yellow-5/80 to-oc-cyan-5/40 font-sans relative overflow-hidden">   */}
+    {/* Animated Background Particles */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-100 rounded-full animate-float" style={{ animationDelay: '0s' }} />
         <div className="absolute top-40 right-20 w-1 h-1 bg-blue-100 rounded-full animate-float" style={{ animationDelay: '1s' }} />
@@ -101,7 +98,9 @@ export default function Home() {
       {/* Hero Section */}
       <div className="relative text-gray-900 overflow-hidden bg-gradient-to-br from-yellow-50 via-blue-50 to-white">
         <div className="absolute inset-0 bg-white/40" />
+        {/* Img add change #1 */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-32 text-center bg-gradient-to-r from-yellow-50 via-white to-yellow-50 rounded-3xl shadow-lg">
+        {/* <div className="relative max-w-7xl mx-auto px-4 pt-24 pb-32 grid md:grid-cols-2 gap-10 items-center"> */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
@@ -281,7 +280,7 @@ export default function Home() {
                     </div>
                     
                     {/* Category Name */}
-                    <h3 className="text-white font-bold text-center text-sm md:text-base group-hover:text-yellow-300 transition-colors duration-300 relative z-10 px-2 drop-shadow-lg">
+                    <h3 className="text-gray-900 font-bold font-bold text-center text-sm md:text-base group-hover:text-yellow-300 transition-colors duration-300 relative z-10 px-2 drop-shadow-lg">
                       {category.name}
                     </h3>
                     
@@ -639,7 +638,7 @@ export default function Home() {
       </section>
 
       {/* Main Content: Categories & Products */}
-      <main className="py-12 bg-gradient-to-br from-oc-blue-6/80 via-oc-yellow-5/80 to-oc-cyan-5/40">
+       <main className="py-12 bg-gradient-to-br from-oc-blue-6/80 via-oc-yellow-5/80 to-oc-cyan-5/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
             {displayedCategories.map((category, index) => (
