@@ -15,6 +15,7 @@ export default function Navbar() {
     const { user, signOut } = useAuth();
     const router = useRouter();
 
+    {/* Notifications */}
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (notificationsRef.current && !notificationsRef.current.contains(event.target as Node)) {
@@ -28,6 +29,42 @@ export default function Navbar() {
         }
     }, [showNotifications]);
 
+    const [isMobile, setIsMobile] = useState(false);
+
+    {/* Close Navbar on resize */}
+    useEffect(() => {
+    const handleResize = () => {
+        if (window.innerWidth >= 768) {
+            setIsOpen(false);
+        }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+    if (!isMobile) {
+        setIsOpen(false);
+    }
+    }, [isMobile]);
+    {/* Check if screen is mobile */}
+    useEffect(() => {
+    const checkScreen = () => {
+        setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreen(); // run once
+    window.addEventListener('resize', checkScreen);
+
+    return () => window.removeEventListener('resize', checkScreen);
+    }, []);
+
+    {/* Close Navbar on route change */}
+    useEffect(() => {
+    setIsOpen(false);
+    }, [pathname]);
+
     // Hide Navbar on certain routes
     if (pathname.startsWith('/admin') || pathname.startsWith('/login')) {
         return null;
@@ -39,6 +76,13 @@ export default function Navbar() {
         { name: 'Sell', href: '/sell' },
         { name: 'Help', href: '/help' },
     ];
+    // const [mounted, setMounted] = useState(false);
+
+    // useEffect(() => {
+    //     setMounted(true);
+    // }, []);
+
+    // if (!mounted) return null;
 
     return (
         <nav className="bg-gradient-to-r from-tuffly-blue to-tuffly-purple border-b-4 border-tuffly-gold shadow-lg sticky top-0 z-50">
@@ -115,7 +159,7 @@ export default function Navbar() {
                         <div className="md:hidden flex items-center">
                           
                                 
-                            <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none">
+                            <button onClick={() => setIsOpen(prev => !prev)} className="text-white focus:outline-none">
                                     {isOpen ? <FaTimes className="h-7 w-7" /> : <FaBars className="h-7 w-7" />}
                             </button>
                         </div>
@@ -124,7 +168,7 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Nav Menu */}
-            {isOpen && (
+            {isOpen && isMobile && (
                 <div className="md:hidden bg-gradient-to-r from-tuffly-blue to-tuffly-purple px-2 pt-2 pb-4 space-y-3 rounded-b-xl shadow-lg">
                     {navLinks.map((link) => (
                         <Link key={link.name} href={link.href} className={`block text-lg font-medium transition-all duration-300 ${pathname === link.href ? 'text-tuffly-gold font-semibold' : 'text-gray-900 hover:text-tuffly-gold'}`} onClick={() => setIsOpen(false)}>
