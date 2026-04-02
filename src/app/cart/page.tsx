@@ -235,7 +235,7 @@ export default function CartPage() {
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-gray-800 mb-4">Order Summary</h2>
               
-              {/* Gift Wrapping */}
+              {/* Gift Wrapping
               <div className="mb-4">
                 <label className="flex items-center space-x-2">
                   <input
@@ -247,7 +247,7 @@ export default function CartPage() {
                   <span className="text-sm font-medium text-gray-700">Gift Wrapping (+₹50)</span>
                   <FaGift className="text-yellow-500" />
                 </label>
-              </div>
+              </div> */}
 
               {/* Price Breakdown */}
               <div className="space-y-2 mb-4">
